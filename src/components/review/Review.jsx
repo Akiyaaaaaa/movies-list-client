@@ -27,7 +27,7 @@ const Review = ({ getMovieData, movie, reviews, setReview }) => {
     const rev = revText.current;
     try {
       const response = await api.post(
-        "/api/v1/reviews",
+        "/reviews",
         {
           reviewContent: rev.value,
           imdbId: movieId,
@@ -60,7 +60,7 @@ const Review = ({ getMovieData, movie, reviews, setReview }) => {
     if (editedContent !== null) {
       try {
         const response = await api.put(
-          `/api/v1/reviews/${reviewId}`,
+          `/reviews/${reviewId}`,
           {
             reviewContent: editedContent,
           },
@@ -91,7 +91,7 @@ const Review = ({ getMovieData, movie, reviews, setReview }) => {
 
     if (confirmDelete) {
       try {
-        await api.delete(`/api/v1/reviews/${reviewId}`, {
+        await api.delete(`/reviews/${reviewId}`, {
           headers: authHeader(),
         });
 
