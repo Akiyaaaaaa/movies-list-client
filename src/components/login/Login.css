@@ -1,0 +1,21 @@
+.auth {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.auth-container {
+  margin: 10px 0;
+}
+
+.bgimage {
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
