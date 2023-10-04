@@ -4,9 +4,25 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import authService from "../../service/auth.service";
 
 const Header = () => {
+  const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  const handleLogOut = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await authService.logout();
+      if (!res) {
+        console.log("Logout successfull");
+        navigate("/auth/login");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <Navbar bg="dark" variant="dark" expand="lg">
@@ -29,14 +45,28 @@ const Header = () => {
                 Watch List
               </NavLink>
             </Nav>
-            <NavLink to="/auth/login">
-              <Button variant="outline-info" className="me-2">
-                Sign In
-              </Button>
-            </NavLink>
-            <NavLink to="/auth/signup">
-              <Button variant="outline-info">Join Us</Button>
-            </NavLink>
+            {user ? (
+              <>
+                <Button
+                  variant="outline-info"
+                  className="me-2"
+                  onClick={handleLogOut}
+                >
+                  Log Out
+                </Button>
+              </>
+            ) : (
+              <>
+                <NavLink to="/auth/login">
+                  <Button variant="outline-info" className="me-2">
+                    Sign In
+                  </Button>
+                </NavLink>
+                <NavLink to="/auth/signup">
+                  <Button variant="outline-info">Join Us</Button>
+                </NavLink>
+              </>
+            )}
           </Navbar.Collapse>
         </Container>
       </Navbar>

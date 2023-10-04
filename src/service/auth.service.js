@@ -1,12 +1,12 @@
 import axios from "axios";
-import api from "../api/axiosConfig";
 
+const URL = import.meta.env.VITE_REACT_BASE_URL;
 class AuthService {
   login(username, password) {
     return axios
-      .post(api + "/api/v1/login", { username, password })
+      .post(URL + "/login", { username, password })
       .then((res) => {
-        if (res.data.accessToken) {
+        if (res.data.body.accessToken) {
           localStorage.setItem("user", JSON.stringify(res.data));
         }
         return res.data;
@@ -18,8 +18,8 @@ class AuthService {
   logout() {
     localStorage.removeItem("user");
   }
-  register(username, email, password) {
-    return axios.post(api + "/api/v1/signup", { username, email, password });
+  register(username, email, password, role) {
+    return axios.post(URL + "/signup", { username, email, password, role });
   }
 }
 
