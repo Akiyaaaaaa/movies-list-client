@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { Fragment, useEffect, useRef } from "react";
 import api from "../../api/axiosConfig";
 import { useParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
@@ -18,7 +18,6 @@ const Review = ({ getMovieData, movie, reviews, setReview }) => {
   } else {
     userId = user.body.id;
   }
-  console.log(userId);
   useEffect(() => {
     getMovieData(movieId);
   }, []);
@@ -35,9 +34,8 @@ const Review = ({ getMovieData, movie, reviews, setReview }) => {
         },
         { headers: authHeader() }
       );
-      const update = [...reviews, { body: rev.value }];
-      rev.value = "";
-      setReview(update);
+      const updatedReviewsResponse = await api.get("/reviews");
+      setReview(updatedReviewsResponse.data);
     } catch (error) {
       console.error(error);
     }
@@ -115,7 +113,11 @@ const Review = ({ getMovieData, movie, reviews, setReview }) => {
         </Row>
         <Row className="mt-2">
           <Col>
-            <img src={movie?.poster} alt="" />
+            <img
+              src={movie?.poster}
+              alt={movie?.title}
+              style={{ width: "-webkit-fill-available" }}
+            />
           </Col>
           <Col>
             {
@@ -140,7 +142,6 @@ const Review = ({ getMovieData, movie, reviews, setReview }) => {
               reviews?.map((val) => {
                 const createdDate = new Date(val.created);
                 const updatedDate = new Date(val.updated);
-
                 const createdDateTimeString = createdDate.toLocaleString(
                   "en-US",
                   {
@@ -158,9 +159,8 @@ const Review = ({ getMovieData, movie, reviews, setReview }) => {
                     day: "2-digit",
                   }
                 );
-
                 return (
-                  <>
+                  <Fragment key={val.id}>
                     <Row>
                       <Col>
                         <div>
@@ -170,7 +170,7 @@ const Review = ({ getMovieData, movie, reviews, setReview }) => {
                             <p>{updatedDateTimeString}</p>
                           )}
                           <p>{val.body}</p>
-                          {val.user && editOrDelete(val.user.id) && (
+                          {editOrDelete(val.user.id) && (
                             <div>
                               <span
                                 className="icon-button"
@@ -194,7 +194,7 @@ const Review = ({ getMovieData, movie, reviews, setReview }) => {
                         <hr />
                       </Col>
                     </Row>
-                  </>
+                  </Fragment>
                 );
               })}
           </Col>

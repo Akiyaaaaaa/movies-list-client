@@ -18,7 +18,6 @@ function App() {
   const getMovies = async () => {
     try {
       const response = await api.get("/movies");
-      console.log(response.data);
       setMovies(response.data);
     } catch (err) {
       console.log(err);
@@ -31,7 +30,6 @@ function App() {
       const singleMovie = response.data;
 
       setMovie(singleMovie);
-      console.log(singleMovie);
 
       setReviews(singleMovie.reviews || []);
     } catch (error) {

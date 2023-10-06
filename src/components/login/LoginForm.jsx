@@ -18,7 +18,6 @@ const LoginForm = () => {
     e.preventDefault();
     try {
       const response = await authService.login(username, password);
-      console.log("Login Response:", response);
 
       if (response.body.accessToken) {
         localStorage.setItem("user", JSON.stringify(response));

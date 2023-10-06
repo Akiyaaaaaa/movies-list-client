@@ -8,3 +8,12 @@
   left: 0;
   z-index: 0;
 }
+
+@media screen and (max-width: 425px) {
+  .form {
+    font-size: 12px !important;
+  }
+  .control {
+    font-size: 10px !important;
+  }
+}

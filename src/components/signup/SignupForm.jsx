@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Form, Button, Row, Col, InputGroup } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import authService from "../../service/auth.service";
+import "./Signup.css";
 
 const SignupForm = () => {
   const [formData, setFormData] = useState({
@@ -48,13 +49,14 @@ const SignupForm = () => {
   return (
     <>
       <>
-        <Form>
+        <Form className="form">
           <Row className="mb-3">
             <Form.Group as={Col} className="mb-3" controlId="formUsername">
               <Form.Label className="text-center">Username</Form.Label>
               <Form.Control
                 type="text"
                 name="username"
+                className="control"
                 placeholder="Enter username"
                 value={formData.username}
                 onChange={handleInputChange}
@@ -64,16 +66,16 @@ const SignupForm = () => {
 
             <Form.Group as={Col} className="mb-3" controlId="formUsername">
               <Form.Label className="text-center">Email address</Form.Label>
-              <InputGroup>
-                <Form.Control
-                  type="email"
-                  name="email"
-                  placeholder="Enter email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  required
-                />
-              </InputGroup>
+
+              <Form.Control
+                type="email"
+                name="email"
+                className="control"
+                placeholder="Enter email"
+                value={formData.email}
+                onChange={handleInputChange}
+                required
+              />
             </Form.Group>
           </Row>
           <Row className="mb-3">
@@ -82,6 +84,7 @@ const SignupForm = () => {
               <Form.Control
                 type="password"
                 name="password"
+                className="control"
                 placeholder="Password"
                 value={formData.password}
                 onChange={handleInputChange}
@@ -93,12 +96,20 @@ const SignupForm = () => {
               <Form.Control
                 type="password"
                 name="confirm"
+                className="control"
                 placeholder="Confirm your password"
                 value={formData.confirm}
                 onChange={handleInputChange}
                 required
               />
             </Form.Group>
+            <div className="mb-3">
+              <p className="small">
+                <a className="text-primary" href="/">
+                  Back to home?
+                </a>
+              </p>
+            </div>
             <div className="d-grid">
               <Button
                 variant="primary"
